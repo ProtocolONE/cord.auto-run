@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoRunHelper", "AutoRunHelper\AutoRunHelper.vcxproj", "{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "Sample\Sample.vcxproj", "{1E5977B9-E564-4D64-853B-FB0A3B08B8E5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA} = {3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoRunHelperTest", "AutoRunHelperTest\AutoRunHelperTest.vcxproj", "{731D9662-A6BF-4C05-B713-F51006782B74}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Debug|Win32.Build.0 = Debug|Win32
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Release|Win32.ActiveCfg = Release|Win32
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Release|Win32.Build.0 = Release|Win32
+		{1E5977B9-E564-4D64-853B-FB0A3B08B8E5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1E5977B9-E564-4D64-853B-FB0A3B08B8E5}.Debug|Win32.Build.0 = Debug|Win32
+		{1E5977B9-E564-4D64-853B-FB0A3B08B8E5}.Release|Win32.ActiveCfg = Release|Win32
+		{1E5977B9-E564-4D64-853B-FB0A3B08B8E5}.Release|Win32.Build.0 = Release|Win32
+		{731D9662-A6BF-4C05-B713-F51006782B74}.Debug|Win32.ActiveCfg = Debug|Win32
+		{731D9662-A6BF-4C05-B713-F51006782B74}.Debug|Win32.Build.0 = Debug|Win32
+		{731D9662-A6BF-4C05-B713-F51006782B74}.Release|Win32.ActiveCfg = Release|Win32
+		{731D9662-A6BF-4C05-B713-F51006782B74}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

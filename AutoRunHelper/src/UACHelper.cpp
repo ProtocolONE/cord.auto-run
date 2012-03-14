@@ -1,0 +1,158 @@
+/****************************************************************************
+** This file is a part of Syncopate Limited GameNet Application or it parts.
+**
+** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** All rights reserved.
+**
+** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
+** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
+****************************************************************************/
+
+#include "UACHelper.h"
+
+namespace GGS {
+  namespace AutoRunHelper {
+
+    UACHelper::UACHelper(void)
+    {
+    }
+
+    UACHelper::~UACHelper(void)
+    {
+    }
+
+    bool UACHelper::isUserAdminByRole(void)
+      /*++ 
+      Routine Description: This routine returns TRUE if the caller's
+      process is a member of the Administrators local group. Caller is NOT
+      expected to be impersonating anyone and is expected to be able to
+      open its own process and process token. 
+      Arguments: None. 
+      Return Value: 
+      TRUE - Caller has Administrators local group. 
+      FALSE - Caller does not have Administrators local group. --
+      */ 
+    {
+      BOOL b;
+      SID_IDENTIFIER_AUTHORITY NtAuthority = SECURITY_NT_AUTHORITY;
+      PSID AdministratorsGroup; 
+      b = AllocateAndInitializeSid(
+        &NtAuthority,
+        2,
+        SECURITY_BUILTIN_DOMAIN_RID,
+        DOMAIN_ALIAS_RID_ADMINS,
+        0, 0, 0, 0, 0, 0,
+        &AdministratorsGroup); 
+      if(b) 
+      {
+        if (!CheckTokenMembership( NULL, AdministratorsGroup, &b)) 
+        {
+          b = FALSE;
+        } 
+        FreeSid(AdministratorsGroup); 
+      }
+
+      return(b);
+    }
+
+    bool UACHelper::uacEnabled()
+    {
+      QSettings settings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
+        QSettings::NativeFormat);
+
+      QVariant value = settings.value("EnableLUA");
+      return value.isValid() && (value.toInt() == 1);
+    }
+
+    bool UACHelper::isUserAdmin( void )
+    {
+      if (!UACHelper::uacEnabled()) {
+        return UACHelper::isUserAdminByRole();
+      }
+
+      TOKEN_ELEVATION_TYPE te;
+      if ( UACHelper::elevationType(&te) != S_OK) {
+        return false;
+      }
+
+      return te != TokenElevationTypeDefault;
+    }
+
+    HRESULT UACHelper::elevationType( __out TOKEN_ELEVATION_TYPE * ptet )
+    {
+      HRESULT hResult = E_FAIL; // assume an error occured
+      HANDLE hToken	= NULL;
+
+      if ( !::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &hToken ) )
+      {
+        return hResult;
+      }
+
+      DWORD dwReturnLength = 0;
+
+      if ( ::GetTokenInformation(
+        hToken,
+        TokenElevationType,
+        ptet,
+        sizeof( *ptet ),
+        &dwReturnLength ) )
+      {
+        hResult = S_OK;
+      }
+
+      ::CloseHandle( hToken );
+      return hResult;
+    }
+
+    bool UACHelper::restartToElevateRights()
+    {
+      QString dir = QCoreApplication::applicationDirPath();
+      QString exe = QCoreApplication::applicationFilePath();
+      QStringList args = QCoreApplication::arguments();
+      args.removeFirst();
+
+      QString commandLineArgs("");
+      if (args.size() > 0) {
+        commandLineArgs = args.join("\" \"");
+        commandLineArgs.prepend(L'"');
+        commandLineArgs.append(L'"');
+      }
+
+      QString open("runas");
+
+      SHELLEXECUTEINFOW shex;
+      ZeroMemory(&shex, sizeof(shex));
+
+      shex.cbSize			= sizeof( SHELLEXECUTEINFO ); 
+      shex.fMask			= 0; 
+      shex.hwnd			  = 0;
+      shex.lpVerb			= reinterpret_cast<const WCHAR*>(open.utf16()); 
+      shex.lpFile			= reinterpret_cast<const WCHAR*>(exe.utf16()); 
+      shex.lpParameters	= reinterpret_cast<const WCHAR*>(commandLineArgs.utf16()); 
+      shex.lpDirectory	= reinterpret_cast<const WCHAR*>(dir.utf16()); 
+      shex.nShow			= SW_NORMAL; 
+
+      if (::ShellExecuteExW(&shex)) {
+        QCoreApplication::exit();
+        return true;
+      }
+
+      return false;
+    }
+
+    bool UACHelper::isUserElevatedAdmin( void )
+    {
+      if (!UACHelper::uacEnabled()) {
+        return UACHelper::isUserAdminByRole();
+      }
+
+      TOKEN_ELEVATION_TYPE te;
+      if ( UACHelper::elevationType(&te) != S_OK) {
+        return false;
+      }
+
+      return te == TokenElevationTypeFull;
+    }
+
+  }
+}
