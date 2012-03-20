@@ -23,7 +23,7 @@ Programm::~Programm(void)
 void Programm::start()
 {
   qDebug() << "started";
-  qDebug() << "UAC: " << GGS::AutoRunHelper::UACHelper::uacEnabled();
+  qDebug() << "UAC: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
   qDebug() << "Admin Group: " << GGS::AutoRunHelper::UACHelper::isUserAdminByRole();
   qDebug() << "Admin: " << GGS::AutoRunHelper::UACHelper::isUserAdmin();
 

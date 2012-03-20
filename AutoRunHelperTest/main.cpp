@@ -10,8 +10,9 @@
 
 #include "gtest/gtest.h"
 #include <QtCore/QCoreApplication>
-#include "vld.h"
-#pragma comment(lib, "vld.lib")
+
+//#include "vld.h"
+//#pragma comment(lib, "vld.lib")
 
 #ifdef NDEBUG
 #pragma comment(lib, "lib/gtest.lib")

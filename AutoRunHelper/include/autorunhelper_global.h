@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (�) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -11,10 +11,11 @@
 #ifndef AUTORUNHELPER_GLOBAL_H
 #define AUTORUNHELPER_GLOBAL_H
 
-//#ifdef _DEBUG
-//  #include <vld.h>
-//  #pragma comment(lib, "vld.lib")
-//#endif 
+// Необходимо для отладки утечек памяти.
+#ifdef VLD_CHECK_ENABLED
+  #include <vld.h>
+  #pragma comment(lib, "vld.lib")
+#endif
 
 #include <QtCore/qglobal.h>
 

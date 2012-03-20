@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** Copyright (В©) 2011 - 2012, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -21,13 +21,14 @@
 #include <QtCore/QSettings>
 #include <QtCore/QString>
 #include <QtCore/QSysInfo>
+#include <QtCore/QDebug>
 
-#define CHECK_HRESULT(f) if (f != S_OK) return false
+#define CHECK_HRESULT(f) if (f != S_OK) { qWarning() << __LINE__ << __FILE__ << "HRESULT: " << f; return false; }
 
 namespace GGS {
   namespace AutoRunHelper {
 
-    /// <summary>Класс реализует методы добавления приложения в автозапуск и удаление его. </summary>
+    /// <summary>РљР»Р°СЃСЃ СЂРµР°Р»РёР·СѓРµС‚ РјРµС‚РѕРґС‹ РґРѕР±Р°РІР»РµРЅРёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ РІ Р°РІС‚РѕР·Р°РїСѓСЃРє Рё СѓРґР°Р»РµРЅРёРµ РµРіРѕ. </summary>
     /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
     class AUTORUNHELPER_EXPORT AutoRunHelper
     {
@@ -36,37 +37,37 @@ namespace GGS {
       ~AutoRunHelper(void);
 
 
-      /// <summary>Задает имя задачи автозапуска.</summary>
+      /// <summary>Р—Р°РґР°РµС‚ РёРјСЏ Р·Р°РґР°С‡Рё Р°РІС‚РѕР·Р°РїСѓСЃРєР°.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="name">The name.</param>
       void setTaskName(const QString& name) { this->_taskName = name; }
 
 
-      /// <summary>Задает описание задачи. Использется только для планировщика задач.</summary>
+      /// <summary>Р—Р°РґР°РµС‚ РѕРїРёСЃР°РЅРёРµ Р·Р°РґР°С‡Рё. РСЃРїРѕР»СЊР·РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РґР»СЏ РїР»Р°РЅРёСЂРѕРІС‰РёРєР° Р·Р°РґР°С‡.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="description">The description.</param>
       void setTaskDescription(const QString& description) { this->_description = description; }
 
 
-      /// <summary>Задает полный путь до программы.</summary>
+      /// <summary>Р—Р°РґР°РµС‚ РїРѕР»РЅС‹Р№ РїСѓС‚СЊ РґРѕ РїСЂРѕРіСЂР°РјРјС‹.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="exePath">Full pathname of the executable file.</param>
       void setPathToExe(const QString& exePath) { this->_taskExe = exePath; }
 
 
-      /// <summary>Задает параметры коммандной строки.</summary>
+      /// <summary>Р—Р°РґР°РµС‚ РїР°СЂР°РјРµС‚СЂС‹ РєРѕРјРјР°РЅРґРЅРѕР№ СЃС‚СЂРѕРєРё.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="arguments">The arguments.</param>
       void setCommandLineArguments(const QString& arguments) { this->_arguments = arguments; }
 
 
-      /// <summary>Убрать задачу из автозапуска. Задача удаляется по имени заданном с помощью setTaskName.</summary>
+      /// <summary>РЈР±СЂР°С‚СЊ Р·Р°РґР°С‡Сѓ РёР· Р°РІС‚РѕР·Р°РїСѓСЃРєР°. Р—Р°РґР°С‡Р° СѓРґР°Р»СЏРµС‚СЃСЏ РїРѕ РёРјРµРЅРё Р·Р°РґР°РЅРЅРѕРј СЃ РїРѕРјРѕС‰СЊСЋ setTaskName.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <returns>true if it succeeds, false if it fails.</returns>
       bool removeFromAutoRun();
 
 
-      /// <summary>Добавить задачу в автозапуск.</summary>
+      /// <summary>Р”РѕР±Р°РІРёС‚СЊ Р·Р°РґР°С‡Сѓ РІ Р°РІС‚РѕР·Р°РїСѓСЃРє.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <returns>true if it succeeds, false if it fails.</returns>
       bool addToAutoRun();

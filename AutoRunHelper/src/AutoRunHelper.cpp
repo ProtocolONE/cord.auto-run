@@ -27,8 +27,8 @@ namespace GGS {
 
       if (this->isUsingTaskScheduler()) 
         return this->removeTaskFromScheduler();
-      else 
-        return this->removeTaskFromRegistry();
+
+      return this->removeTaskFromRegistry();
     }
 
     bool AutoRunHelper::addToAutoRun()
@@ -38,18 +38,15 @@ namespace GGS {
 
       if (this->isUsingTaskScheduler()) 
         return this->addTaskToScheduler();
-      else 
-        return this->addTaskToRegistry();
+
+      return this->addTaskToRegistry();
     }
 
     bool AutoRunHelper::removeTaskFromRegistry()
     {
       QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
         QSettings::NativeFormat);
-      if ( settings.contains(this->_taskName) ) {
-        settings.remove(this->_taskName);
-      }
-
+      settings.remove(this->_taskName);
       return true;
     }
     
@@ -64,7 +61,12 @@ namespace GGS {
     
     bool AutoRunHelper::addTaskToScheduler()
     {
-      CHECK_HRESULT(CoInitialize(NULL));
+      if (CoInitialize(NULL) == S_FALSE)
+      {
+        qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
+        return this->internalAddTaskToScheduler();
+      }
+      
       bool result = this->internalAddTaskToScheduler();
       CoUninitialize();
       return result;
@@ -72,7 +74,12 @@ namespace GGS {
 
     bool AutoRunHelper::removeTaskFromScheduler()
     {
-      CHECK_HRESULT(CoInitialize(NULL));
+      if (CoInitialize(NULL) == S_FALSE)
+      {
+        qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
+        return this->internalRemoveTaskFromScheduler();
+      }
+
       bool result = this->internalRemoveTaskFromScheduler();
       CoUninitialize();
       return result;

@@ -43,19 +43,19 @@ namespace GGS {
         DOMAIN_ALIAS_RID_ADMINS,
         0, 0, 0, 0, 0, 0,
         &AdministratorsGroup); 
-      if(b) 
+      if (b) 
       {
         if (!CheckTokenMembership( NULL, AdministratorsGroup, &b)) 
         {
           b = FALSE;
-        } 
+        }
         FreeSid(AdministratorsGroup); 
       }
 
       return(b);
     }
 
-    bool UACHelper::uacEnabled()
+    bool UACHelper::isUacEnabled()
     {
       QSettings settings("HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\System",
         QSettings::NativeFormat);
@@ -66,36 +66,32 @@ namespace GGS {
 
     bool UACHelper::isUserAdmin( void )
     {
-      if (!UACHelper::uacEnabled()) {
+      if (!UACHelper::isUacEnabled())
         return UACHelper::isUserAdminByRole();
-      }
 
       TOKEN_ELEVATION_TYPE te;
-      if ( UACHelper::elevationType(&te) != S_OK) {
+      if (UACHelper::elevationType(&te) != S_OK)
         return false;
-      }
 
       return te != TokenElevationTypeDefault;
     }
 
-    HRESULT UACHelper::elevationType( __out TOKEN_ELEVATION_TYPE * ptet )
+    HRESULT UACHelper::elevationType(__out TOKEN_ELEVATION_TYPE *ptet)
     {
       HRESULT hResult = E_FAIL; // assume an error occured
       HANDLE hToken	= NULL;
 
-      if ( !::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &hToken ) )
-      {
+      if (!::OpenProcessToken(::GetCurrentProcess(), TOKEN_QUERY, &hToken ))
         return hResult;
-      }
 
       DWORD dwReturnLength = 0;
 
-      if ( ::GetTokenInformation(
+      if (::GetTokenInformation(
         hToken,
         TokenElevationType,
         ptet,
         sizeof( *ptet ),
-        &dwReturnLength ) )
+        &dwReturnLength ))
       {
         hResult = S_OK;
       }
@@ -122,15 +118,15 @@ namespace GGS {
 
       SHELLEXECUTEINFOW shex;
       ZeroMemory(&shex, sizeof(shex));
-
-      shex.cbSize			= sizeof( SHELLEXECUTEINFO ); 
-      shex.fMask			= 0; 
-      shex.hwnd			  = 0;
-      shex.lpVerb			= reinterpret_cast<const WCHAR*>(open.utf16()); 
-      shex.lpFile			= reinterpret_cast<const WCHAR*>(exe.utf16()); 
+      
+      shex.cbSize			  = sizeof( SHELLEXECUTEINFO ); 
+      shex.fMask			  = 0; 
+      shex.hwnd			    = 0;
+      shex.lpVerb			  = reinterpret_cast<const WCHAR*>(open.utf16()); 
+      shex.lpFile			  = reinterpret_cast<const WCHAR*>(exe.utf16()); 
       shex.lpParameters	= reinterpret_cast<const WCHAR*>(commandLineArgs.utf16()); 
       shex.lpDirectory	= reinterpret_cast<const WCHAR*>(dir.utf16()); 
-      shex.nShow			= SW_NORMAL; 
+      shex.nShow			  = SW_NORMAL; 
 
       if (::ShellExecuteExW(&shex)) {
         QCoreApplication::exit();
@@ -142,14 +138,12 @@ namespace GGS {
 
     bool UACHelper::isUserElevatedAdmin( void )
     {
-      if (!UACHelper::uacEnabled()) {
+      if (!UACHelper::isUacEnabled())
         return UACHelper::isUserAdminByRole();
-      }
 
       TOKEN_ELEVATION_TYPE te;
-      if ( UACHelper::elevationType(&te) != S_OK) {
+      if (UACHelper::elevationType(&te) != S_OK)
         return false;
-      }
 
       return te == TokenElevationTypeFull;
     }
