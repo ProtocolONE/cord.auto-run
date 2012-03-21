@@ -21,6 +21,7 @@
 #include <QtCore/QSettings>
 #include <QtCore/QString>
 #include <QtCore/QSysInfo>
+#include <QtCore/QDateTime>
 #include <QtCore/QDebug>
 
 #define CHECK_HRESULT(f) if (f != S_OK) { qWarning() << __LINE__ << __FILE__ << "HRESULT: " << f; return false; }

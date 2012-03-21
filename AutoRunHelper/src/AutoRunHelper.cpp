@@ -143,6 +143,10 @@ namespace GGS {
       if(lastIndex != -1) {
         targetDirectory = cleanPath.mid(0, lastIndex + 1);
       }
+      
+      QDateTime dt = QDateTime::currentDateTimeUtc();
+      dt.setTimeSpec(Qt::OffsetFromUTC);
+      QString currentDateString = dt.toString(Qt::ISODate);
 
       QString definition = QString("<?xml version=\"1.0\" encoding=\"UTF-16\"?> " \
         "<Task version=\"1.2\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">" \
@@ -152,7 +156,7 @@ namespace GGS {
         "</RegistrationInfo>" \
         "<Triggers>" \
         "<LogonTrigger>" \
-        "<StartBoundary>2012-03-06T14:43:58.269+04:00</StartBoundary>" \
+        "<StartBoundary>%5</StartBoundary>" \
         "<Enabled>true</Enabled>" \
         "<Delay>PT1M</Delay>" \
         "</LogonTrigger>" \
@@ -195,7 +199,7 @@ namespace GGS {
         "<WorkingDirectory>%4</WorkingDirectory>" \
         "</Exec>" \
         "</Actions>" \
-        "</Task>").arg(this->_description, this->_taskExe, this->_arguments, targetDirectory);
+        "</Task>").arg(this->_description, this->_taskExe, this->_arguments, targetDirectory, currentDateString);
 
       return definition;
     }
