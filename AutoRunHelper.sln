@@ -9,6 +9,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Sample", "Sample\Sample.vcx
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoRunHelperTest", "AutoRunHelperTest\AutoRunHelperTest.vcxproj", "{731D9662-A6BF-4C05-B713-F51006782B74}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA} = {3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AADFA32C-423D-4D04-88BF-EA8304FB81E5}"
+	ProjectSection(SolutionItems) = preProject
+		Deploy.props = Deploy.props
+		Readme.txt = Readme.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,5 +40,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		QtVersion = $(DefaultQtVersion)
 	EndGlobalSection
 EndGlobal

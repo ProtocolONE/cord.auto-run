@@ -14,12 +14,6 @@
 //#include "vld.h"
 //#pragma comment(lib, "vld.lib")
 
-#ifdef NDEBUG
-#pragma comment(lib, "lib/gtest.lib")
-#else
-#pragma comment(lib, "lib/gtestd.lib")
-#endif
-
 #ifdef _DEBUG
 #pragma comment(lib, "AutoRunHelperX86d.lib")
 #else
