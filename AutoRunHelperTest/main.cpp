@@ -7,10 +7,11 @@
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 ****************************************************************************/
-
+#include "UACHelper.h"
 #include "gtest/gtest.h"
 #include <QtCore/QCoreApplication>
 
+#include <QtCore/QDebug>
 //#include "vld.h"
 //#pragma comment(lib, "vld.lib")
 
@@ -23,6 +24,13 @@
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+    
+    qDebug() << "started";
+    qDebug() << "UAC: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
+    qDebug() << "Admin Group: " << GGS::AutoRunHelper::UACHelper::isUserAdminByRole();
+    qDebug() << "Admin: " << GGS::AutoRunHelper::UACHelper::isUserAdmin();
+    qDebug() << "Eleveated Admin: " << GGS::AutoRunHelper::UACHelper::isUserElevatedAdmin();
+
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

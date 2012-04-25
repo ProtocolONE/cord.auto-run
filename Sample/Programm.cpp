@@ -26,6 +26,7 @@ void Programm::start()
   qDebug() << "UAC: " << GGS::AutoRunHelper::UACHelper::isUacEnabled();
   qDebug() << "Admin Group: " << GGS::AutoRunHelper::UACHelper::isUserAdminByRole();
   qDebug() << "Admin: " << GGS::AutoRunHelper::UACHelper::isUserAdmin();
+  qDebug() << "Eleveated Admin: " << GGS::AutoRunHelper::UACHelper::isUserElevatedAdmin();
 
   if(!GGS::AutoRunHelper::UACHelper::isUserAdminByRole()) {
     if (!GGS::AutoRunHelper::UACHelper::restartToElevateRights()) {
