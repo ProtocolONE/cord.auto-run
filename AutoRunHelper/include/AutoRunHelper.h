@@ -34,32 +34,41 @@ namespace GGS {
     class AUTORUNHELPER_EXPORT AutoRunHelper
     {
     public:
-      AutoRunHelper(void);
-      ~AutoRunHelper(void);
+      AutoRunHelper();
+      ~AutoRunHelper();
 
+      /*!
+        \fn void AutoRunHelper::setTaskName(const QString& name)
+      
+        \brief Задает автора задачи в автозапуске.
+      */
+      void setTaskAuthor(const QString& taskAuthor);
 
-      /// <summary>Задает имя задачи автозапуска.</summary>
-      /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
-      /// <param name="name">The name.</param>
-      void setTaskName(const QString& name) { this->_taskName = name; }
-
+      /*!
+        \fn void AutoRunHelper::setTaskName(const QString& name);
+      
+        \brief Задает имя задачи автозапуска.
+      
+        \param name The name.
+      */
+      void setTaskName(const QString& name);
 
       /// <summary>Задает описание задачи. Использется только для планировщика задач.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="description">The description.</param>
-      void setTaskDescription(const QString& description) { this->_description = description; }
+      void setTaskDescription(const QString& description);
 
 
       /// <summary>Задает полный путь до программы.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="exePath">Full pathname of the executable file.</param>
-      void setPathToExe(const QString& exePath) { this->_taskExe = exePath; }
+      void setPathToExe(const QString& exePath);
 
 
       /// <summary>Задает параметры коммандной строки.</summary>
       /// <remarks>Ilya.Tkachenko, 08.03.2012.</remarks>
       /// <param name="arguments">The arguments.</param>
-      void setCommandLineArguments(const QString& arguments) { this->_arguments = arguments; }
+      void setCommandLineArguments(const QString& arguments);
 
 
       /// <summary>Убрать задачу из автозапуска. Задача удаляется по имени заданном с помощью setTaskName.</summary>
@@ -87,6 +96,7 @@ namespace GGS {
 
       QString xmlDefinition();
 
+      QString _taskAuthor;
       QString _taskName;
       QString _description;
       QString _taskExe;

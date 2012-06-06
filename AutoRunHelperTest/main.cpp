@@ -32,5 +32,6 @@ int main(int argc, char *argv[])
     qDebug() << "Eleveated Admin: " << GGS::AutoRunHelper::UACHelper::isUserElevatedAdmin();
 
     testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
+    int result = RUN_ALL_TESTS();
+    return result;
 }

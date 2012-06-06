@@ -34,7 +34,11 @@ void RemoveOldTask( QString &taskName )
   ASSERT_NE(S_OK, hr);
 }
 
-void CheckForCreation(const QString &taskName, const QString& exe, const QString& args, const QString& description ) 
+void CheckForCreation(const QString &taskName, 
+                      const QString &exe, 
+                      const QString &args, 
+                      const QString &description,
+                      const QString &author) 
 {
   HRESULT hr;
   CComPtr<ITaskService> service;
@@ -67,15 +71,16 @@ void CheckForCreation(const QString &taskName, const QString& exe, const QString
   QString qxml = QString::fromUtf16((reinterpret_cast<const WCHAR*>(xmlString.m_str)));
   ASSERT_TRUE( doc.setContent(qxml) );
 
-  ASSERT_EQ(0, doc.documentElement()
+  ASSERT_EQ(description, doc.documentElement()
     .firstChildElement("RegistrationInfo")
-    .firstChildElement("Description").text().compare(description));
+    .firstChildElement("Description").text());
 
   QDomElement exec = doc.documentElement()
                     .firstChildElement("Actions")
                     .firstChildElement("Exec");
-  ASSERT_EQ(0, exec.firstChildElement("Command").text().compare(exe));
-  ASSERT_EQ(0, exec.firstChildElement("Arguments").text().compare(args));
+
+  ASSERT_EQ(exe, exec.firstChildElement("Command").text());
+  ASSERT_EQ(args, exec.firstChildElement("Arguments").text());
 
   QString cleanPath = QDir::cleanPath(exe);
   int lastIndex = cleanPath.lastIndexOf('/');
@@ -84,7 +89,13 @@ void CheckForCreation(const QString &taskName, const QString& exe, const QString
     targetDirectory = cleanPath.mid(0, lastIndex + 1);
   }
 
-  ASSERT_EQ(0, exec.firstChildElement("WorkingDirectory").text().compare(targetDirectory));
+  ASSERT_EQ(targetDirectory, exec.firstChildElement("WorkingDirectory").text());
+
+  QString authorFromXml = doc.documentElement()
+    .firstChildElement("RegistrationInfo")
+    .firstChildElement("Author").text();
+
+  ASSERT_EQ(author, authorFromXml);
 }
 
 void CheckForRemove(const QString &taskName)
@@ -111,6 +122,7 @@ void CheckForRemove(const QString &taskName)
 
 void InternalTaskSchedulerTest() 
 {
+  QString taskAuthor("SuperDuper");
   QString taskName("TestAutoRunHelperTest");
   QString exe = QString::fromLocal8Bit("C:\\какой-то\\Тестовый файл.exe");
   QString args = QString::fromLocal8Bit("/параметр \"тестовый параметр\" /test");
@@ -120,7 +132,7 @@ void InternalTaskSchedulerTest()
   CoUninitialize();
 
   GGS::AutoRunHelper::AutoRunHelper helper;
-
+  helper.setTaskAuthor(taskAuthor);
   helper.setTaskName(taskName);
   helper.setPathToExe(exe);
   helper.setCommandLineArguments(args);
@@ -129,7 +141,7 @@ void InternalTaskSchedulerTest()
   helper.addToAutoRun();
 
   CoInitialize(NULL);
-  CheckForCreation(taskName, exe, args, description);
+  CheckForCreation(taskName, exe, args, description, taskAuthor);
   CoUninitialize();
   
   helper.removeFromAutoRun();

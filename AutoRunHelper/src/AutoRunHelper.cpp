@@ -12,11 +12,12 @@
 
 namespace GGS {
   namespace AutoRunHelper {
-    AutoRunHelper::AutoRunHelper(void)
+    AutoRunHelper::AutoRunHelper()
+      : _taskAuthor("Global Gamers Solution")
     {
     }
 
-    AutoRunHelper::~AutoRunHelper(void)
+    AutoRunHelper::~AutoRunHelper()
     {
     }
 
@@ -151,7 +152,7 @@ namespace GGS {
       QString definition = QString("<?xml version=\"1.0\" encoding=\"UTF-16\"?> " \
         "<Task version=\"1.2\" xmlns=\"http://schemas.microsoft.com/windows/2004/02/mit/task\">" \
         "<RegistrationInfo>" \
-        "<Author>Global Gamers Solution</Author>" \
+        "<Author>%6</Author>" \
         "<Description>%1</Description>" \
         "</RegistrationInfo>" \
         "<Triggers>" \
@@ -199,7 +200,12 @@ namespace GGS {
         "<WorkingDirectory>%4</WorkingDirectory>" \
         "</Exec>" \
         "</Actions>" \
-        "</Task>").arg(this->_description, this->_taskExe, this->_arguments, targetDirectory, currentDateString);
+        "</Task>").arg(this->_description, 
+                       this->_taskExe, 
+                       this->_arguments, 
+                       targetDirectory, 
+                       currentDateString,
+                       this->_taskAuthor);
 
       return definition;
     }
@@ -210,5 +216,29 @@ namespace GGS {
       return version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7;
     }
 
+    void AutoRunHelper::setTaskAuthor(const QString& taskAuthor)
+    {
+      this->_taskAuthor = taskAuthor;
+    }
+
+    void AutoRunHelper::setTaskName(const QString& name)
+    {
+      this->_taskName = name;
+    }
+
+    void AutoRunHelper::setTaskDescription(const QString& description)
+    {
+      this->_description = description;
+    }
+
+    void AutoRunHelper::setPathToExe(const QString& exePath)
+    {
+      this->_taskExe = exePath;
+    }
+
+    void AutoRunHelper::setCommandLineArguments(const QString& arguments)
+    {
+      this->_arguments = arguments;
+    }
   }
 }
