@@ -13,15 +13,15 @@
 namespace GGS {
   namespace AutoRunHelper {
 
-    UACHelper::UACHelper(void)
+    UACHelper::UACHelper()
     {
     }
 
-    UACHelper::~UACHelper(void)
+    UACHelper::~UACHelper()
     {
     }
 
-    bool UACHelper::isUserAdminByRole(void)
+    bool UACHelper::isUserAdminByRole()
       /*++ 
       Routine Description: This routine returns TRUE if the caller's
       process is a member of the Administrators local group. Caller is NOT
@@ -64,8 +64,9 @@ namespace GGS {
       return value.isValid() && (value.toInt() == 1);
     }
 
-    bool UACHelper::isUserAdmin( void )
+    bool UACHelper::isUserAdmin()
     {
+      throw new std::exception("some testing hacking test", 1276);
       if (!UACHelper::isUacEnabled())
         return UACHelper::isUserAdminByRole();
 
