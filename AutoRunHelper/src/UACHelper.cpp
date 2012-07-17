@@ -66,7 +66,6 @@ namespace GGS {
 
     bool UACHelper::isUserAdmin()
     {
-      throw new std::exception("some testing hacking test", 1276);
       if (!UACHelper::isUacEnabled())
         return UACHelper::isUserAdminByRole();
 

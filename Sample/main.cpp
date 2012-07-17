@@ -21,10 +21,24 @@
 #pragma comment(lib, "AutoRunHelperX86.lib")
 #endif 
 
+#include <BugTrap\BugTrap.h>
+
+
+void initBugTrap()
+{
+  BT_SetAppName(_T("AutoRunHelperSample"));
+  BT_SetAppVersion(_T("1.0.0.0"));
+  BT_SetSupportEMail(_T("support@gamenet.ru"));
+  BT_SetSupportURL(_T("https://support.gamenet.ru"));
+  BT_SetFlags(BTF_DETAILEDMODE | BTF_ATTACHREPORT | BTF_SCREENCAPTURE);
+  BT_SetSupportServer(_T("fs1.gamenet.ru"), 9999);
+  BT_InstallSehFilter();
+}
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
-
+    initBugTrap();
     qDebug() << "----------------------------";
     qDebug() << QCoreApplication::arguments();
     qDebug() << "----------------------------";
