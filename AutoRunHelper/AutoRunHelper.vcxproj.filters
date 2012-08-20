@@ -5,13 +5,19 @@
     <ClCompile Include="src\UACHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\AutoRunHelper.h" />
-    <ClInclude Include="include\autorunhelper_global.h" />
-    <ClInclude Include="include\UACHelper.h" />
     <ClInclude Include="Version.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AutoRunHelper\autorunhelper_global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AutoRunHelper\AutoRunHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AutoRunHelper\UACHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

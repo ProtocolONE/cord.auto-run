@@ -1,6 +1,6 @@
 #include "gtest/gtest.h"
 
-#include "AutoRunHelper.h"
+#include <AutoRunHelper/AutoRunHelper>
 
 #include <taskschd.h>
 #include <atlbase.h>

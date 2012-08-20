@@ -11,8 +11,8 @@
 #ifndef _SAMPLE_TEST_PROGRAMM_H_
 #define _SAMPLE_TEST_PROGRAMM_H_
 
-#include "UACHelper.h"
-#include "AutoRunHelper.h"
+#include <AutoRunHelper/AutoRunHelper>
+#include <AutoRunHelper/UACHelper>
 
 #include <QtCore/QObject>
 #include <QtCore/QDebug>

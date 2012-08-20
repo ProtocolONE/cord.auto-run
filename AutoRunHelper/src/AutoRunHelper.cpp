@@ -8,7 +8,7 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 ****************************************************************************/
 
-#include "AutoRunHelper.h"
+#include <AutoRunHelper/AutoRunHelper>
 
 namespace GGS {
   namespace AutoRunHelper {
@@ -239,6 +239,116 @@ namespace GGS {
     void AutoRunHelper::setCommandLineArguments(const QString& arguments)
     {
       this->_arguments = arguments;
+    }
+
+    bool AutoRunHelper::removeFromAutoRun(const QString& name, const QString& exeName) 
+    {
+      if (!UACHelper::isUserElevatedAdmin())
+        return false;
+
+      if (this->isUsingTaskScheduler()) 
+        return this->removeTaskFromSchedulerByNameAndExeName(name, exeName);
+
+      return this->removeTaskFromRegistryByNameAndExeName(name, exeName);
+    }
+
+    bool AutoRunHelper::removeTaskFromRegistryByNameAndExeName(const QString& name, const QString& exeName)
+    {
+      QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run", 
+        QSettings::NativeFormat);
+
+      QString registryExePath = settings.value(name, "").toString();
+      if (registryExePath.isEmpty() || registryExePath.length() < 2)
+        return false;
+
+      QString exePath;
+      int firstIndex = 0;
+      int lastIndex = -1;
+
+      if (registryExePath.startsWith('"')) {
+        firstIndex = 1;
+        lastIndex = registryExePath.indexOf('"', 1) - 1;
+      } else {
+        firstIndex = 0;
+        lastIndex = registryExePath.indexOf(' ', 1);
+      }
+
+      if (lastIndex < 0)
+        lastIndex = registryExePath.length() - 1;
+
+      exePath = registryExePath.mid(firstIndex, lastIndex - firstIndex + 1);
+      if (exePath.endsWith(exeName, Qt::CaseInsensitive)) {
+        settings.remove(name);
+        return true;
+      }
+
+      return false;
+    }
+
+    bool AutoRunHelper::removeTaskFromSchedulerByNameAndExeName(const QString& name, const QString& exeName)
+    {
+      if (CoInitialize(NULL) == S_FALSE)
+      {
+        return this->internalRemoveTaskFromSchedulerByNameAndExeName(name, exeName);
+      }
+
+      bool result = this->internalRemoveTaskFromSchedulerByNameAndExeName(name, exeName);
+      CoUninitialize();
+      return result;
+    }
+
+    bool AutoRunHelper::internalRemoveTaskFromSchedulerByNameAndExeName(const QString& name, const QString& exeName)
+    {
+      CComPtr<ITaskService> service;
+      CHECK_HRESULT(service.CoCreateInstance(__uuidof(TaskScheduler)));
+      CHECK_HRESULT(service->Connect(
+        CComVariant(),   // local computer
+        CComVariant(),   // current user
+        CComVariant(),   // current domain
+        CComVariant()));
+
+      CComPtr<ITaskFolder> folder;
+      CHECK_HRESULT(service->GetFolder(CComBSTR(L"\\"), &folder));
+      CComPtr<IRegisteredTask> task;
+      CHECK_HRESULT(folder->GetTask(CComBSTR( reinterpret_cast<const WCHAR*>(name.utf16()) ), &task));
+
+      CComPtr<ITaskDefinition> definition;
+      CHECK_HRESULT(task->get_Definition(&definition));
+
+      CComPtr<IActionCollection> actions;
+      CHECK_HRESULT(definition->get_Actions(&actions));
+
+      long actionsCount;
+      CHECK_HRESULT(actions->get_Count(&actionsCount));
+      
+      bool shouldDelete = false;
+      //проверим все action
+      for (int i = 0; i < actionsCount; ++i) {
+        CComPtr<IAction> action;
+        // не поверите но нумерация с 1 =)
+        CHECK_HRESULT(actions->get_Item(i+1, &action));
+
+        TASK_ACTION_TYPE actionType;
+        CHECK_HRESULT(action->get_Type(&actionType));
+        if (actionType != TASK_ACTION_TYPE::TASK_ACTION_EXEC)
+          continue;
+
+        CComPtr<IExecAction> pExeAction;
+        CHECK_HRESULT(action->QueryInterface(IID_IExecAction, (void**)&pExeAction));
+
+        CComBSTR bstrPath;
+        pExeAction->get_Path(&bstrPath);
+
+        std::wstring ws(bstrPath, SysStringLen(bstrPath));
+        QString qexePath = QString::fromStdWString(ws);
+        if (qexePath.endsWith(exeName, Qt::CaseInsensitive)) {
+          shouldDelete = true;
+          break;
+        }
+      }
+
+      if (shouldDelete)
+        CHECK_HRESULT(folder->DeleteTask(CComBSTR( reinterpret_cast<const WCHAR*>(name.utf16()) ), 0));
     }
   }
 }

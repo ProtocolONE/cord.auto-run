@@ -8,7 +8,8 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 ****************************************************************************/
 
-#include "UACHelper.h"
+#include <AutoRunHelper/UACHelper>
+#include <AutoRunHelper/AutoRunHelper>
 
 #include "Programm.h"
 
@@ -22,7 +23,6 @@
 #endif 
 
 #include <BugTrap\BugTrap.h>
-
 
 void initBugTrap()
 {
@@ -43,6 +43,11 @@ int main(int argc, char *argv[])
     qDebug() << QCoreApplication::arguments();
     qDebug() << "----------------------------";
     //GGS::AutoRunHelper::UACHelper helper;
+
+    GGS::AutoRunHelper::AutoRunHelper helper;
+    qDebug() << "qGNA removed? - " << helper.removeFromAutoRun("qGNA", "qCS.exe");
+
+    return 0;
     Programm prog;
     QTimer::singleShot(0, &prog, SLOT(start()));
     return a.exec();

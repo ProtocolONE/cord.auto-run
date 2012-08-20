@@ -8,11 +8,11 @@
 ** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
 ****************************************************************************/
 
-#include "UACHelper.h"
+#include <AutoRunHelper/UACHelper>
 
 namespace GGS {
   namespace AutoRunHelper {
-
+ 
     UACHelper::UACHelper()
     {
     }
