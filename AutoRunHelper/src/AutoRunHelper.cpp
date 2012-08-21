@@ -1,7 +1,7 @@
 /****************************************************************************
 ** This file is a part of Syncopate Limited GameNet Application or it parts.
 **
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
+** Copyright (В©) 2011 - 2012, Syncopate Limited and/or affiliates. 
 ** All rights reserved.
 **
 ** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
@@ -322,11 +322,11 @@ namespace GGS {
       CHECK_HRESULT(actions->get_Count(&actionsCount));
       
       bool shouldDelete = false;
-      //проверим все action
+      //РїСЂРѕРІРµСЂРёРј РІСЃРµ action
       for (int i = 0; i < actionsCount; ++i) {
         CComPtr<IAction> action;
-        // не поверите но нумерация с 1 =)
-        CHECK_HRESULT(actions->get_Item(i+1, &action));
+        // РЅРµ РїРѕРІРµСЂРёС‚Рµ РЅРѕ РЅСѓРјРµСЂР°С†РёСЏ СЃ 1 =)
+        CHECK_HRESULT(actions->get_Item(i + 1, &action));
 
         TASK_ACTION_TYPE actionType;
         CHECK_HRESULT(action->get_Type(&actionType));
@@ -348,7 +348,7 @@ namespace GGS {
       }
 
       if (shouldDelete)
-        CHECK_HRESULT(folder->DeleteTask(CComBSTR( reinterpret_cast<const WCHAR*>(name.utf16()) ), 0));
+        CHECK_HRESULT(folder->DeleteTask(CComBSTR(reinterpret_cast<const WCHAR*>(name.utf16())), 0));
     }
   }
 }
