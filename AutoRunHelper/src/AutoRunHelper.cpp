@@ -212,8 +212,10 @@ namespace GGS {
 
     bool AutoRunHelper::isUsingTaskScheduler()
     {
-      QSysInfo::WinVersion version = QSysInfo::windowsVersion();
-      return version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7;
+      DWORD verion = GetVersion();
+      DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
+      DWORD dwMinorVersion = (DWORD)(HIBYTE(LOWORD(verion)));
+      return dwMajorVersion == 6 && dwMinorVersion >=0 && dwMinorVersion <= 2;
     }
 
     void AutoRunHelper::setTaskAuthor(const QString& taskAuthor)
