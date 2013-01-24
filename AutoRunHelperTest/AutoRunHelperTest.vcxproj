@@ -61,7 +61,7 @@
       <AdditionalDependencies>qtmaind.lib;QtCored4.lib;QtXmld4.lib;gtestd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /Y /I /R $(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll $(TargetDir)</Command>
+      <Command>xcopy /Y /I /R "$(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll" "$(TargetDir)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -85,7 +85,7 @@
       <AdditionalDependencies>qtmain.lib;QtCore4.lib;QtXml4.lib;gtest.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /Y /I /R $(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll $(TargetDir)</Command>
+      <Command>xcopy /Y /I /R "$(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll" "$(TargetDir)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>

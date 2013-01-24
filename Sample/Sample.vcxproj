@@ -63,7 +63,7 @@
       <AdditionalDependencies>qtmaind.lib;QtCored4.lib;BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /Y /I /R $(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll $(TargetDir)</Command>
+      <Command>xcopy /Y /I /R "$(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll" "$(TargetDir)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"</Command>
@@ -86,7 +86,7 @@
       <AdditionalDependencies>qtmain.lib;QtCore4.lib;BugTrap.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>xcopy /Y /I /R $(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll $(TargetDir)</Command>
+      <Command>xcopy /Y /I /R "$(TargetDir)..\..\AutoRunHelper\$(ConfigurationName)\*.dll" "$(TargetDir)"</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>xcopy /Y /I /R /E "$(QGNACOMMONDIR)\IntelleSoft\BugTrap\$(BugTrapArea)\bin\*.dll" "$(TargetDir)"</Command>
