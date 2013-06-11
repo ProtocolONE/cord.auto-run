@@ -68,7 +68,7 @@ void CheckForCreation(const QString &taskName,
 
   QDomDocument doc;
   
-  QString qxml = QString::fromUtf16((reinterpret_cast<const WCHAR*>(xmlString.m_str)));
+  QString qxml = QString((QChar*)xmlString.m_str, ::SysStringLen(xmlString.m_str));
   ASSERT_TRUE( doc.setContent(qxml) );
 
   ASSERT_EQ(description, doc.documentElement()
