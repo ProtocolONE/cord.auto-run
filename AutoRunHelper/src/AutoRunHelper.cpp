@@ -64,7 +64,8 @@ namespace GGS {
     {
       if (CoInitialize(NULL) == S_FALSE)
       {
-        qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
+        // INFO за годы использования думаю понятно, что ошибка эта не интересна.
+        // qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
         return this->internalAddTaskToScheduler();
       }
       
@@ -77,7 +78,8 @@ namespace GGS {
     {
       if (CoInitialize(NULL) == S_FALSE)
       {
-        qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
+        // INFO за годы использования думаю понятно, что ошибка эта не интересна.
+        // qWarning()  << __LINE__ << __FILE__ << "cant CoInitialize trying without";
         return this->internalRemoveTaskFromScheduler();
       }
 
