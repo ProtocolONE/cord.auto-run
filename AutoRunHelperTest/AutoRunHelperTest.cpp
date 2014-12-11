@@ -124,9 +124,9 @@ void InternalTaskSchedulerTest()
 {
   QString taskAuthor("SuperDuper");
   QString taskName("TestAutoRunHelperTest");
-  QString exe = QString::fromLocal8Bit("C:\\какой-то\\Тестовый файл.exe");
-  QString args = QString::fromLocal8Bit("/параметр \"тестовый параметр\" /test");
-  QString description = QString::fromLocal8Bit("Какое-то описани. Some description.");
+  QString exe = QString::fromLocal8Bit("C:\\РєР°РєРѕР№-С‚Рѕ\\РўРµСЃС‚РѕРІС‹Р№ С„Р°Р№Р».exe");
+  QString args = QString::fromLocal8Bit("/РїР°СЂР°РјРµС‚СЂ \"С‚РµСЃС‚РѕРІС‹Р№ РїР°СЂР°РјРµС‚СЂ\" /test");
+  QString description = QString::fromLocal8Bit("РљР°РєРѕРµ-С‚Рѕ РѕРїРёСЃР°РЅРё. Some description.");
   CoInitialize(NULL);
   RemoveOldTask(taskName);
   CoUninitialize();
@@ -160,9 +160,9 @@ void TaskSchedulerTest()
 void RegistryTest()
 {
   QString taskName("TestAutoRunHelperTest");
-  QString exe = QString::fromLocal8Bit("C:\\какой-то\\Тестовый файл.exe");
-  QString args = QString::fromLocal8Bit("/параметр \"тестовый параметр\" /test");
-  QString description = QString::fromLocal8Bit("Какое-то описани. Some description.");
+  QString exe = QString::fromLocal8Bit("C:\\РєР°РєРѕР№-С‚Рѕ\\РўРµСЃС‚РѕРІС‹Р№ С„Р°Р№Р».exe");
+  QString args = QString::fromLocal8Bit("/РїР°СЂР°РјРµС‚СЂ \"С‚РµСЃС‚РѕРІС‹Р№ РїР°СЂР°РјРµС‚СЂ\" /test");
+  QString description = QString::fromLocal8Bit("РљР°РєРѕРµ-С‚Рѕ РѕРїРёСЃР°РЅРё. Some description.");
   
   QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
     QSettings::NativeFormat);
@@ -190,6 +190,41 @@ void RegistryTest()
   ASSERT_FALSE(settings.contains(taskName));
 }
 
+// INFO https://jira.gamenet.ru:8443/browse/QGNA-1112
+// Р•СЃР»Рё СЃС‚СЂРѕРєР° РІ Р°РІС‚РѕР·Р°РїСѓСЃРєРµ Р·Р°РєР°РЅС‡РёРІР°РµС‚СЃСЏ РїСЂРѕР±РµР»РѕРј Рё Р±РµР· Р°СЂРіСѓРјРµРЅС‚РѕРІ, С‚Рѕ РїСЂРѕС†РµСЃСЃ РЅРµ СЃС‚Р°СЂС‚СѓРµС‚.
+void RegistryTestEmptyArguments()
+{
+  QString taskName("TestAutoRunHelperTestEmpty");
+  QString exe = QString::fromLocal8Bit("C:\\РєР°РєРѕР№-С‚Рѕ\\РўРµСЃС‚РѕРІС‹Р№ С„Р°Р№Р».exe");
+  QString args;
+  QString description = QString::fromLocal8Bit("РљР°РєРѕРµ-С‚Рѕ РѕРїРёСЃР°РЅРё. Some description.");
+
+  QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+    QSettings::NativeFormat);
+  settings.remove(taskName);
+
+  ASSERT_FALSE(settings.contains(taskName));
+
+  GGS::AutoRunHelper::AutoRunHelper helper;
+
+  helper.setTaskName(taskName);
+  helper.setPathToExe(exe);
+  helper.setCommandLineArguments(args);
+  helper.setTaskDescription(description);
+
+  helper.addToAutoRun();
+
+  ASSERT_TRUE(settings.contains(taskName));
+  QString expectionValue = QString("\"%1\"").arg(exe);
+  QVariant actual = settings.value(taskName);
+  ASSERT_TRUE(actual.isValid());
+  QString actualPath = actual.toString();
+  ASSERT_EQ(0, actualPath.compare(expectionValue));
+
+  helper.removeFromAutoRun();
+  ASSERT_FALSE(settings.contains(taskName));
+}
+
 TEST(AutoRunHelperTest, addRemove)
 {
   TaskSchedulerTest();
@@ -197,11 +232,12 @@ TEST(AutoRunHelperTest, addRemove)
 
   QSysInfo::WinVersion version = QSysInfo::windowsVersion();
   if (version == QSysInfo::WV_VISTA || version == QSysInfo::WV_WINDOWS7 ) {
-    // тест на шедулер
+    // С‚РµСЃС‚ РЅР° С€РµРґСѓР»РµСЂ
     TaskSchedulerTest();
   } else {
-    // тест на реестр
+    // С‚РµСЃС‚ РЅР° СЂРµРµСЃС‚СЂ
     RegistryTest();
+    RegistryTestEmptyArguments();
   }
   
 }

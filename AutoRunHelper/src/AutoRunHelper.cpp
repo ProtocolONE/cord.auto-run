@@ -56,7 +56,7 @@ namespace GGS {
       QSettings settings("HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
         QSettings::NativeFormat);
       QString params = QString("\"%1\" %2").arg(this->_taskExe, this->_arguments);
-      settings.setValue(this->_taskName, params);
+      settings.setValue(this->_taskName, params.trimmed());
       return true;
     }
     
