@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
     <CommonArea>trunk</CommonArea>
-    <BugTrapArea>1.3.3718.38316</BugTrapArea>
+    <BugTrapArea>1.3.3718.38316.vs13</BugTrapArea>
   </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup />
