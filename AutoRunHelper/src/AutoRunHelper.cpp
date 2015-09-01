@@ -214,16 +214,10 @@ namespace GGS {
 
     bool AutoRunHelper::isUsingTaskScheduler()
     {
-      DWORD verion = GetVersion();
-      DWORD dwMajorVersion = (DWORD)(LOBYTE(LOWORD(verion)));
-      DWORD dwMinorVersion = (DWORD)(HIBYTE(LOWORD(verion)));
-      return (dwMajorVersion == 6 && dwMinorVersion >=0 && dwMinorVersion <= 2);
-
-      // TODO change to next code after switch to 4.8.3 or grater
-      //QSysInfo::WinVersion version = QSysInfo::windowsVersion();
-      //return version == QSysInfo::WV_VISTA 
-      //  || version == QSysInfo::WV_WINDOWS7 
-      //  || version == QSysInfo::WV_WINDOWS8;
+      QSysInfo::WinVersion version = QSysInfo::windowsVersion();
+      //INFO QGNA Can`t be launched on 2000 or NT. So we need to use task scheduler on each OS greater then XP.
+      return version != QSysInfo::WV_XP
+        && version != QSysInfo::WV_2003;
     }
 
     void AutoRunHelper::setTaskAuthor(const QString& taskAuthor)
