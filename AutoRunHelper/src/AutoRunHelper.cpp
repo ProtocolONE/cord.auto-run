@@ -1,16 +1,19 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
+#include <AutoRunHelper/AutoRunHelper.h>
+#include <AutoRunHelper/UACHelper.h>
 
-#include <AutoRunHelper/AutoRunHelper>
+#include <QtCore/QDir>
+#include <QtCore/QSettings>
+#include <QtCore/QString>
+#include <QtCore/QSysInfo>
+#include <QtCore/QDateTime>
+#include <QtCore/QDebug>
 
-namespace GGS {
+#include <taskschd.h>
+#include <atlbase.h>
+
+#define CHECK_HRESULT(f) if (f != S_OK) { qWarning() << __LINE__ << __FILE__ << "HRESULT: " << f; return false; }
+
+namespace P1 {
   namespace AutoRunHelper {
     AutoRunHelper::AutoRunHelper()
       : _taskAuthor("Global Gamers Solution")

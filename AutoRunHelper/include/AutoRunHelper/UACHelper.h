@@ -1,27 +1,11 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
+#pragma once
 
-#ifndef _GGS_AUTORUNHELPER_UACHELPER_H_
-#define _GGS_AUTORUNHELPER_UACHELPER_H_
-
-#include <AutoRunHelper/autorunhelper_global>
-
-#include <QtCore/QSettings>
-#include <QtCore/QCoreApplication>
-#include <QtCore/QStringList>
-#include <QtCore/QDebug>
+#include <AutoRunHelper/autorunhelper_global.h>
 
 #include <Windows.h>
 #include <Shellapi.h>
 
-namespace GGS {
+namespace P1 {
   namespace AutoRunHelper {
 
     /// <summary>Класс реализует методы по определению текущих прав пользвоателя и метод для поднятия прав приложения. </summary>
@@ -73,4 +57,3 @@ namespace GGS {
 
   }
 }
-#endif // _GGS_AUTORUNHELPER_UACHELPER_H_

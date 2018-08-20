@@ -1,32 +1,10 @@
-/****************************************************************************
-** This file is a part of Syncopate Limited GameNet Application or it parts.
-**
-** Copyright (©) 2011 - 2012, Syncopate Limited and/or affiliates. 
-** All rights reserved.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-****************************************************************************/
+#pragma once
 
-#ifndef _GGS_AUTORUNHELPER_AUTORUNHELPER_H_
-#define _GGS_AUTORUNHELPER_AUTORUNHELPER_H_
+#include <AutoRunHelper/autorunhelper_global.h>
 
-#include <AutoRunHelper/autorunhelper_global>
-#include <AutoRunHelper/UACHelper>
-
-#include <QtCore/QDir>
-#include <QtCore/QSettings>
 #include <QtCore/QString>
-#include <QtCore/QSysInfo>
-#include <QtCore/QDateTime>
-#include <QtCore/QDebug>
 
-#include <taskschd.h>
-#include <atlbase.h>
-
-#define CHECK_HRESULT(f) if (f != S_OK) { qWarning() << __LINE__ << __FILE__ << "HRESULT: " << f; return false; }
-
-namespace GGS {
+namespace P1 {
   namespace AutoRunHelper {
 
     /// <summary>Класс реализует методы добавления приложения в автозапуск и удаление его. </summary>
@@ -125,5 +103,3 @@ namespace GGS {
 
   }
 }
-
-#endif // _GGS_AUTORUNHELPER_AUTORUNHELPER_H_

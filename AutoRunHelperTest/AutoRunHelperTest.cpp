@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
-#include <AutoRunHelper/AutoRunHelper>
+#include <AutoRunHelper/AutoRunHelper.h>
 
 #include <taskschd.h>
 #include <atlbase.h>
@@ -8,8 +8,8 @@
 #include <QtCore/QString>
 #include <QtCore/QSysInfo>
 #include <QtCore/QSettings>
+#include <QtCore/QDir>
 #include <QtXml/QDomDocument>
-
 
 void RemoveOldTask( QString &taskName ) 
 {
@@ -131,7 +131,7 @@ void InternalTaskSchedulerTest()
   RemoveOldTask(taskName);
   CoUninitialize();
 
-  GGS::AutoRunHelper::AutoRunHelper helper;
+  P1::AutoRunHelper::AutoRunHelper helper;
   helper.setTaskAuthor(taskAuthor);
   helper.setTaskName(taskName);
   helper.setPathToExe(exe);
@@ -151,7 +151,6 @@ void InternalTaskSchedulerTest()
   CoUninitialize();
 }
 
-
 void TaskSchedulerTest() 
 {
   InternalTaskSchedulerTest();
@@ -170,7 +169,7 @@ void RegistryTest()
 
   ASSERT_FALSE(settings.contains(taskName));
 
-  GGS::AutoRunHelper::AutoRunHelper helper;
+  P1::AutoRunHelper::AutoRunHelper helper;
 
   helper.setTaskName(taskName);
   helper.setPathToExe(exe);
@@ -205,7 +204,7 @@ void RegistryTestEmptyArguments()
 
   ASSERT_FALSE(settings.contains(taskName));
 
-  GGS::AutoRunHelper::AutoRunHelper helper;
+  P1::AutoRunHelper::AutoRunHelper helper;
 
   helper.setTaskName(taskName);
   helper.setPathToExe(exe);
