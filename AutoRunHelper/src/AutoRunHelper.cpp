@@ -218,7 +218,7 @@ namespace P1 {
     bool AutoRunHelper::isUsingTaskScheduler()
     {
       QSysInfo::WinVersion version = QSysInfo::windowsVersion();
-      //INFO QGNA Can`t be launched on 2000 or NT. So we need to use task scheduler on each OS greater then XP.
+      //INFO Launcher Can`t be launched on 2000 or NT. So we need to use task scheduler on each OS greater then XP.
       return version != QSysInfo::WV_XP
         && version != QSysInfo::WV_2003;
     }

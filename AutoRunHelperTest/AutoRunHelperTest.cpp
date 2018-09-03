@@ -189,7 +189,6 @@ void RegistryTest()
   ASSERT_FALSE(settings.contains(taskName));
 }
 
-// INFO https://jira.gamenet.ru:8443/browse/QGNA-1112
 // Если строка в автозапуске заканчивается пробелом и без аргументов, то процесс не стартует.
 void RegistryTestEmptyArguments()
 {
