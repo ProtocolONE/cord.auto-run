@@ -11,40 +11,27 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AutoRunHelperTest", "AutoRu
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AADFA32C-423D-4D04-88BF-EA8304FB81E5}"
-	ProjectSection(SolutionItems) = preProject
-		Deploy.props = Deploy.props
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
-		Static Debug|Win32 = Static Debug|Win32
-		Static Release|Win32 = Static Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Debug|Win32.ActiveCfg = Debug|Win32
 		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Debug|Win32.Build.0 = Debug|Win32
 		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Release|Win32.ActiveCfg = Release|Win32
 		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Release|Win32.Build.0 = Release|Win32
-		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Static Debug|Win32.ActiveCfg = Static Debug|Win32
-		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Static Debug|Win32.Build.0 = Static Debug|Win32
-		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Static Release|Win32.ActiveCfg = Static Release|Win32
-		{3AF3E520-5F31-402A-81D8-39D5BBEE5ADA}.Static Release|Win32.Build.0 = Static Release|Win32
 		{731D9662-A6BF-4C05-B713-F51006782B74}.Debug|Win32.ActiveCfg = Debug|Win32
 		{731D9662-A6BF-4C05-B713-F51006782B74}.Debug|Win32.Build.0 = Debug|Win32
 		{731D9662-A6BF-4C05-B713-F51006782B74}.Release|Win32.ActiveCfg = Release|Win32
 		{731D9662-A6BF-4C05-B713-F51006782B74}.Release|Win32.Build.0 = Release|Win32
-		{731D9662-A6BF-4C05-B713-F51006782B74}.Static Debug|Win32.ActiveCfg = Static Debug|Win32
-		{731D9662-A6BF-4C05-B713-F51006782B74}.Static Debug|Win32.Build.0 = Static Debug|Win32
-		{731D9662-A6BF-4C05-B713-F51006782B74}.Static Release|Win32.ActiveCfg = Static Release|Win32
-		{731D9662-A6BF-4C05-B713-F51006782B74}.Static Release|Win32.Build.0 = Static Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {B893A8B0-5CB0-42C8-83E3-8EF121293267}
 		QtVersion = $(DefaultQtVersion)
+		SolutionGuid = {B893A8B0-5CB0-42C8-83E3-8EF121293267}
 	EndGlobalSection
 EndGlobal

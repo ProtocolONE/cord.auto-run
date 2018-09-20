@@ -11,10 +11,10 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AutoRunHelper\autorunhelper_global.h">
+    <ClInclude Include="include\AutoRunHelper\AutoRunHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\AutoRunHelper\AutoRunHelper.h">
+    <ClInclude Include="include\AutoRunHelper\autorunhelper_global.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\AutoRunHelper\UACHelper.h">
